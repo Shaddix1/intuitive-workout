@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intuitive Workout — You already do this.</title>
+  <meta name="description" content="You already do this. You just don't have a name for it. Intuitive Workout by Jan Nenning — a book about learning to listen to your body.">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://intuitive-workout.com">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="book">
+  <meta property="og:title" content="Intuitive Workout — You already do this.">
+  <meta property="og:description" content="A book about learning to listen to your body. By Jan Nenning — sport science graduate, former personal trainer.">
+  <meta property="og:url" content="https://intuitive-workout.com">
+  <meta property="og:locale" content="en_GB">
+  <meta property="book:author" content="Jan Nenning">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Intuitive Workout — You already do this.">
+  <meta name="twitter:description" content="A book about learning to listen to your body. By Jan Nenning.">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": "Intuitive Workout",
+    "author": { "@type": "Person", "name": "Jan Nenning" },
+    "description": "A book about learning to listen to your body and building a movement practice that survives.",
+    "url": "https://intuitive-workout.com",
+    "inLanguage": "en"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Tokens ── */
+    :root {
+      --warm-white:   #FAF8F5;
+      --near-black:   #1A1A1A;
+      --terracotta:   #C4622D;
+      --surface-alt:  #F0EDEA;
+      --mid-grey:     #8A8A8A;
+      --light-grey:   #E2DDD8;
+      --white:        #FFFFFF;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    /* ── Paper grain overlay ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.038;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    body {
+      background: var(--warm-white);
+      color: var(--near-black);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── Utilities ── */
+    .serif { font-family: 'Playfair Display', serif; }
+    .container { max-width: 680px; margin: 0 auto; padding: 0 32px; }
+    .container--wide { max-width: 1140px; margin: 0 auto; padding: 0 40px; }
+
+    .section-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mid-grey);
+      margin-bottom: 36px;
+    }
+
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 4vw, 42px);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 36px;
+    }
+
+    .prose p {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: #3D3A38;
+      margin-bottom: 22px;
+    }
+
+    .prose p:last-child { margin-bottom: 0; }
+    .prose em { font-style: italic; color: var(--near-black); font-weight: 400; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 22px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(250,248,245,0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s ease;
+    }
+
+    nav.scrolled { border-color: var(--light-grey); }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+      color: var(--near-black);
+      text-decoration: none;
+    }
+
+    .nav-logo-light { font-weight: 300; }
+    .nav-logo-bold { font-weight: 700; }
+
+    .nav-cta {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      background: var(--near-black);
+      padding: 10px 22px;
+      text-decoration: none;
+      transition: background 0.25s ease;
+    }
+
+    .nav-cta:hover { background: var(--terracotta); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 130px 40px 90px;
+    }
+
+    .hero-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: block;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mid-grey);
+      margin-bottom: 32px;
+    }
+
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 5.5vw, 68px);
+      line-height: 1.06;
+      letter-spacing: -0.025em;
+      margin-bottom: 30px;
+    }
+
+    .hero-headline .hl-light {
+      font-weight: 300;
+      display: block;
+    }
+
+    .hero-headline .hl-bold {
+      font-weight: 900;
+      display: block;
+      color: var(--near-black);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: #4A4744;
+      max-width: 500px;
+      margin-bottom: 44px;
+    }
+
+    .hero-sub em {
+      font-style: italic;
+      color: var(--near-black);
+      font-weight: 400;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      background: var(--near-black);
+      padding: 17px 40px;
+      text-decoration: none;
+      transition: background 0.25s ease, transform 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--terracotta);
+      transform: translateY(-1px);
+    }
+
+    .btn-soon {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid-grey);
+      border: 1px solid var(--light-grey);
+      padding: 17px 40px;
+      cursor: default;
+    }
+
+    .hero-byline {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--mid-grey);
+      line-height: 1.6;
+      max-width: 260px;
+    }
+
+    /* ── Book mockup ── */
+    .hero-book-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .book {
+      width: 268px;
+      height: 402px;
+      background: #FAF8F5;
+      padding: 38px 34px 30px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 2;
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.03),
+        0 8px 24px rgba(0,0,0,0.09),
+        0 32px 64px rgba(0,0,0,0.10),
+        0 64px 96px rgba(0,0,0,0.06);
+      animation: bookDrift 1.2s cubic-bezier(0.4,0,0.2,1) both;
+      animation-delay: 0.2s;
+    }
+
+    .book::before {
+      content: '';
+      position: absolute;
+      top: 5px; left: 6px; right: -6px; bottom: -5px;
+      background: #E8E4DF;
+      z-index: -1;
+    }
+
+    .book::after {
+      content: '';
+      position: absolute;
+      top: 10px; left: 12px; right: -12px; bottom: -10px;
+      background: #D8D3CD;
+      z-index: -2;
+    }
+
+    @keyframes bookDrift {
+      from { opacity: 0; transform: translateY(28px) rotate(-1.5deg); }
+      to   { opacity: 1; transform: translateY(0) rotate(0deg); }
+    }
+
+    .book-author {
+      font-family: 'Inter', sans-serif;
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.38);
+    }
+
+    .book-title-block {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .book-intuitive {
+      font-family: 'Playfair Display', serif;
+      font-weight: 300;
+      font-size: 52px;
+      line-height: 0.88;
+      letter-spacing: -0.025em;
+      color: var(--near-black);
+    }
+
+    .book-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--terracotta);
+      margin: 16px 0 12px;
+    }
+
+    .book-workout {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 52px;
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      color: var(--near-black);
+    }
+
+    .book-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .book-rule { width: 22px; height: 1px; background: rgba(26,26,26,0.14); }
+
+    .book-tagline {
+      font-family: 'Inter', sans-serif;
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      color: var(--terracotta);
+      text-transform: uppercase;
+    }
+
+    /* ── Divider ── */
+    .hr { height: 1px; background: var(--light-grey); margin: 0 40px; }
+
+    /* ── Problem section ── */
+    .section-problem {
+      padding: 120px 0;
+      background: var(--warm-white);
+    }
+
+    .problem-accent {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 1.75;
+      color: var(--near-black);
+      border-left: 3px solid var(--terracotta);
+      padding: 4px 0 4px 28px;
+      margin: 44px 0;
+    }
+
+    /* ── Pull quotes ── */
+    .pull-quote {
+      padding: 96px 40px;
+      text-align: center;
+    }
+
+    .pull-quote--light { background: var(--surface-alt); }
+    .pull-quote--dark  { background: var(--near-black); }
+
+    .pull-quote__text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(26px, 4vw, 44px);
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .pull-quote--light .pull-quote__text { color: var(--near-black); }
+    .pull-quote--dark  .pull-quote__text { color: var(--white); }
+
+    .pull-quote__rule {
+      width: 40px;
+      height: 2px;
+      background: var(--terracotta);
+      margin: 32px auto 0;
+    }
+
+    /* ── Philosophy section ── */
+    .section-philosophy {
+      padding: 120px 0;
+      background: var(--warm-white);
+    }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 80px;
+      background: var(--surface-alt);
+    }
+
+    .pillar {
+      padding: 48px 44px;
+      border-right: 1px solid var(--light-grey);
+    }
+
+    .pillar:last-child { border-right: none; }
+
+    .pillar-number {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--terracotta);
+      margin-bottom: 20px;
+    }
+
+    .pillar-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 18px;
+    }
+
+    .pillar-body {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #5A5754;
+    }
+
+    /* ── About section ── */
+    .section-about {
+      padding: 120px 0;
+      background: var(--warm-white);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-card {
+      background: var(--surface-alt);
+      padding: 52px 44px;
+      height: 100%;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .about-card-spacer { flex: 1; }
+
+    .about-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      margin-bottom: 8px;
+    }
+
+    .about-title {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      color: var(--mid-grey);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      line-height: 1.8;
+    }
+
+    .about-rule {
+      width: 32px;
+      height: 2px;
+      background: var(--terracotta);
+    }
+
+    /* ── Inside section ── */
+    .section-inside {
+      padding: 120px 0;
+      background: var(--near-black);
+    }
+
+    .section-inside .section-label { color: rgba(255,255,255,0.32); }
+
+    .section-inside .section-heading { color: var(--white); }
+
+    .parts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+    }
+
+    .part-card {
+      background: #222220;
+      padding: 44px 40px;
+      transition: background 0.25s ease;
+      cursor: default;
+    }
+
+    .part-card:hover { background: #2A2A28; }
+
+    .part-number {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 18px;
+    }
+
+    .part-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+    }
+
+    .part-body {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.46);
+      line-height: 1.75;
+    }
+
+    /* ── FAQ section ── */
+    .section-faq {
+      padding: 120px 0;
+      background: var(--warm-white);
+    }
+
+    .faq-list {
+      margin-top: 60px;
+      border-top: 1px solid var(--light-grey);
+    }
+
+    details {
+      border-bottom: 1px solid var(--light-grey);
+    }
+
+    summary {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--near-black);
+      line-height: 1.4;
+      padding: 28px 0;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      user-select: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: '+';
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 20px;
+      color: var(--terracotta);
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    details[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      font-size: 15px;
+      font-weight: 300;
+      color: #5A5754;
+      line-height: 1.8;
+      max-width: 560px;
+      padding-bottom: 28px;
+    }
+
+    /* ── Final CTA ── */
+    .section-cta {
+      padding: 140px 40px;
+      text-align: center;
+      background: var(--surface-alt);
+    }
+
+    .cta-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 58px);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 28px;
+    }
+
+    .cta-heading .hl-light { font-weight: 300; display: block; }
+    .cta-heading .hl-bold  { font-weight: 900; display: block; }
+
+    .cta-body {
+      font-size: 17px;
+      font-weight: 300;
+      color: #4A4744;
+      line-height: 1.85;
+      max-width: 480px;
+      margin: 0 auto 48px;
+    }
+
+    .cta-note {
+      display: block;
+      margin-top: 22px;
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--mid-grey);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 36px 40px;
+      border-top: 1px solid var(--light-grey);
+      background: var(--warm-white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      color: var(--near-black);
+      text-decoration: none;
+    }
+
+    .footer-logo-light { font-weight: 300; }
+    .footer-logo-bold  { font-weight: 700; }
+
+    footer p {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--mid-grey);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .hero { padding: 120px 24px 80px; }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+
+      .hero-book-wrap { order: -1; overflow: hidden; }
+
+      .pillars {
+        grid-template-columns: 1fr;
+      }
+
+      .pillar {
+        border-right: none;
+        border-bottom: 1px solid var(--light-grey);
+      }
+
+      .pillar:last-child { border-bottom: none; }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .about-card { min-height: 180px; }
+
+      .parts-grid { grid-template-columns: 1fr; }
+
+      nav { padding: 18px 24px; }
+
+      .container { padding: 0 24px; }
+      .container--wide { padding: 0 24px; }
+      .hr { margin: 0 24px; }
+
+      .pull-quote { padding: 72px 24px; }
+
+      .section-problem, .section-philosophy,
+      .section-about, .section-inside,
+      .section-faq { padding: 80px 0; }
+
+      .section-cta { padding: 100px 24px; }
+
+      .mobile-hidden { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-cta-group { flex-direction: column; align-items: flex-start; gap: 20px; }
+      footer { flex-direction: column; text-align: center; gap: 10px; }
+
+      .section-problem, .section-philosophy,
+      .section-about, .section-inside,
+      .section-faq { padding: 60px 0; }
+
+      .section-cta { padding: 80px 20px; }
+
+      .pull-quote { padding: 60px 20px; }
+
+      .book { width: 220px; height: 330px; padding: 28px 26px 22px; }
+      .book-intuitive, .book-workout { font-size: 42px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-light">Intuitive</span><span class="nav-logo-bold">Workout</span>
+    </a>
+    <a href="#get" class="nav-cta">Coming soon</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+
+      <div class="hero-text">
+        <span class="hero-eyebrow">A book by Jan Nenning</span>
+
+        <h1 class="hero-headline">
+          <span class="hl-light">You already do this.</span>
+          <span class="hl-bold">You just don't have<br>a name for it.</span>
+        </h1>
+
+        <p class="hero-sub">
+          The neck roll after two hours at a screen. The stretch that happens on its own after sitting too long. Your body has been trying to tell you something for years.
+          <br><br>
+          <em>Intuitive Workout</em> is about learning to hear it.
+        </p>
+
+        <div class="hero-cta-group">
+          <span class="btn-soon">Coming soon</span>
+          <span class="hero-byline">By Jan Nenning, sport science graduate, former personal trainer, and someone who walked away from a career he was good at to figure this out.</span>
+        </div>
+      </div>
+
+      <div class="hero-book-wrap">
+        <div class="book">
+          <div class="book-author">Jan Nenning</div>
+          <div class="book-title-block">
+            <div class="book-intuitive">Intuitive</div>
+            <div class="book-bar"></div>
+            <div class="book-workout">Workout</div>
+          </div>
+          <div class="book-bottom">
+            <div class="book-rule"></div>
+            <div class="book-tagline">The only program is you.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="hr"></div>
+
+  <!-- Problem -->
+  <section class="section-problem">
+    <div class="container reveal">
+      <span class="section-label">The pattern</span>
+      <h2 class="section-heading">You've tried.<br>It didn't stick.</h2>
+      <div class="prose">
+        <p>There's a recognizable cycle. Someone starts a program with genuine motivation. They show up, they track, they push through the days they don't feel like it. For a while it works.</p>
+        <p>Then something interrupts it. A trip, a stressful month, a week where sleep went wrong. The sessions stop. And then the worst part happens. Not the missed sessions themselves.</p>
+        <p>The person decides they've failed.</p>
+        <p>You might have done this two or three times. Each restart costs more than the last. The obvious conclusion is that you're the kind of person who quits.</p>
+        <p>But there's another reading: the framework was wrong for you.</p>
+      </div>
+
+      <em class="problem-accent">
+        The program wasn't designed for <em>you</em>. It was designed for an average person who doesn't exist.
+      </em>
+
+      <div class="prose mobile-hidden">
+        <p>Only 37% of people who start a structured exercise program maintain it after the first year. The fitness industry's response is more programs. Stricter ones. Twelve weeks. Sixteen weeks. This time it'll stick.</p>
+        <p>It rarely does. Not because of discipline. Because the question being answered was wrong.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pull Quote 1 -->
+  <div class="pull-quote pull-quote--light reveal">
+    <p class="pull-quote__text">"What if the problem isn't you?"</p>
+    <div class="pull-quote__rule"></div>
+  </div>
+
+  <!-- Philosophy -->
+  <section class="section-philosophy">
+    <div class="container reveal">
+      <span class="section-label">The philosophy</span>
+      <h2 class="section-heading">A different question</h2>
+      <div class="prose">
+        <p>I spent years studying the science behind sport. I learned the methods, coached people one-on-one through real goals.</p>
+        <p>Then I left. South America first, then Asia. I watched an arriero on Rainbow Mountain at 5,200 metres move at a pace I couldn't match for the first hour. He was carrying things. He wasn't training. His body had learned what the mountain required and delivered it. For him, this wasn't exercise. It was just Tuesday.</p>
+        <p>I stood there catching my breath and watched him go.</p>
+        <p>I came home with a question I hadn't expected: what if the most effective workout isn't the most optimized one? What if it's the one you actually <em>want</em> to do?</p>
+        <p class="mobile-hidden">Intuitive Workout is built on one observation. The motivation that comes from inside outlasts every program I've seen. Caring about the movement itself, not a deadline or a number. When the reason you exercise comes from outside you, it lasts as long as those things do. When it comes from inside, it doesn't work that way. One is borrowed. The other is yours.</p>
+      </div>
+    </div>
+
+    <div class="container--wide reveal" style="margin-top: 80px;">
+      <div class="pillars">
+        <div class="pillar">
+          <span class="pillar-number"></span>
+          <div class="pillar-title">Sustainability<br>over optimization</div>
+          <p class="pillar-body">A practice that still exists in five years is more useful than a peak you hit once and couldn't hold.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar-number"></span>
+          <div class="pillar-title">Listening<br>over following</div>
+          <p class="pillar-body">Following a program means learning to override your own signals. This book works on reversing that.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar-number"></span>
+          <div class="pillar-title">Your practice,<br>not mine</div>
+          <p class="pillar-body">Nothing here is designed to be followed. It's designed to help you find what is.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pull Quote 2 -->
+  <div class="pull-quote pull-quote--dark reveal">
+    <p class="pull-quote__text">"The goal is a practice that survives.<br>Survives what? Everything."</p>
+    <div class="pull-quote__rule"></div>
+  </div>
+
+  <!-- About Jan -->
+  <section class="section-about">
+    <div class="container--wide reveal">
+      <div class="about-grid">
+        <div>
+          <span class="section-label">About the author</span>
+          <h2 class="section-heading">Who wrote this</h2>
+          <div class="prose">
+            <p>I'm Jan Nenning. I studied sport science at the University of Vienna and spent years after that coaching people, helping them get stronger, hit the numbers they came in with.</p>
+            <p>I believed in it. I was good at it.</p>
+            <p class="mobile-hidden">Then something pulled at me that I couldn't name. I left. Spent time in places I hadn't been, partly looking for something, mostly just moving. I watched people live in ways that made the question of working out seem beside the point. Not inspiring. Just different enough to make me wonder.</p>
+            <p>I came back with a lot of questions and fewer certainties.</p>
+            <p>This book isn't a rejection of everything I learned. It's what happens when you take the science seriously enough to ask: why does it keep failing so many people?</p>
+          </div>
+        </div>
+
+        <div class="about-card">
+          <div class="about-card-spacer"></div>
+          <div class="about-name">Jan Nenning</div>
+          <div class="about-title">Sport science graduate<br>Personal trainer · Author</div>
+          <div class="about-rule"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What's Inside -->
+  <section class="section-inside">
+    <div class="container--wide">
+      <span class="section-label">What's inside</span>
+      <h2 class="section-heading">What this book does</h2>
+
+      <div class="parts-grid reveal">
+        <div class="part-card">
+          <span class="part-number">Part I</span>
+          <div class="part-heading">What's Broken</div>
+          <p class="part-body">Why programs fail most people, and why discipline isn't the reason.</p>
+        </div>
+        <div class="part-card">
+          <span class="part-number">Part II</span>
+          <div class="part-heading">The Journey</div>
+          <p class="part-body">How years of coaching, then leaving, changed the question.</p>
+        </div>
+        <div class="part-card">
+          <span class="part-number">Part III</span>
+          <div class="part-heading">The Philosophy</div>
+          <p class="part-body">The book's core claim: your body sends signals constantly, and reading them is a skill.</p>
+        </div>
+        <div class="part-card">
+          <span class="part-number">Part IV</span>
+          <div class="part-heading">Living It</div>
+          <p class="part-body">Starting points for when there's no routine, no momentum, and nowhere obvious to begin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pull Quote 3 -->
+  <div class="pull-quote pull-quote--light reveal">
+    <p class="pull-quote__text">"The listening was the discipline.<br>I'd just never framed it that way."</p>
+    <div class="pull-quote__rule"></div>
+  </div>
+
+  <!-- FAQ -->
+  <section class="section-faq">
+    <div class="container reveal">
+      <span class="section-label">Questions</span>
+      <h2 class="section-heading">Common questions</h2>
+
+      <div class="faq-list">
+        <details>
+          <summary>Is this an anti-fitness book?</summary>
+          <p class="faq-answer">No. I love training. I still lift weights, I still run, I push myself hard when the moment calls for it. This book is pro-movement and anti-dogma. There's a difference. Chapter Seven is specifically written for people who've been lifting for years and have no interest in stopping.</p>
+        </details>
+        <details>
+          <summary>Do I need fitness experience to read this?</summary>
+          <p class="faq-answer">None. Whether you've never been to a gym or you've trained for twenty years, the philosophy is relevant. The questions it asks don't require a fitness background to answer.</p>
+        </details>
+        <details>
+          <summary>Is there a workout plan included?</summary>
+          <p class="faq-answer">Deliberately, no. That would defeat the point. There are examples of how I approach my own training, not as blueprints but as illustrations. The goal is to help you find your own approach.</p>
+        </details>
+        <details>
+          <summary>Is this science-based or is it just vibes?</summary>
+          <p class="faq-answer">Both, honestly. The motivation research is real. The adherence data is real. The interoception framework comes from neuroscience. But lived experience matters too, and I don't pretend otherwise. Science confirms what the experience already showed. That's the order in this book.</p>
+        </details>
+        <details>
+          <summary>Is this a philosophy book or a practical guide?</summary>
+          <p class="faq-answer">It leans toward philosophy, but with practical ground under it. Every idea connects to something you can actually do, or stop doing. Part IV is entirely practical. The rest earns it.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="section-cta" id="get">
+    <h2 class="cta-heading">
+      <span class="hl-light">Ready to stop</span>
+      <span class="hl-bold">starting over?</span>
+    </h2>
+    <p class="cta-body">
+      If you know the cycle: motivated, burned out, guilty, repeat. This book won't give you a new program to follow.<br><br>
+      It'll give you something that lasts longer: a different way of thinking about why you move, and how to build a relationship with your body that doesn't require constant willpower to hold together.
+    </p>
+    <span class="btn-soon">Coming soon</span>
+    <span class="cta-note">The book is not yet available. More to come.</span>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <a href="#" class="footer-logo">
+      <span class="footer-logo-light">Intuitive</span><span class="footer-logo-bold">Workout</span>
+    </a>
+    <p>intuitive-workout.com &nbsp;·&nbsp; © 2026 Jan Nenning</p>
+  </footer>
+
+  <script>
+    // Nav border on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

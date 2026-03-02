@@ -1,0 +1,14 @@
+# Private project content — not for public repo
+ebook/
+research/
+assets/
+social/
+marketing/
+distribution/
+output/
+temp/
+EBOOK-BRIEF.md
+MARKETING-CONTEXT.md
+project-status.md
+skills-lock.json
+CLAUDE.md
