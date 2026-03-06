@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Intuitive Workout — You already do this.</title>
-  <meta name="description" content="You already do this. You just don't have a name for it. Intuitive Workout by Jan Nenning — a book about learning to listen to your body.">
+  <title>Intuitive Workout. You already do this.</title>
+  <meta name="description" content="You already do this. You just don't have a name for it. Intuitive Workout by Jan Nenning, a book about learning to listen to your body.">
 
   <!-- Canonical -->
   <link rel="canonical" href="https://intuitive-workout.com">
@@ -703,6 +703,8 @@
       transform: translateY(0);
     }
 
+    .mobile-only { display: none; }
+
     /* ── Responsive ── */
     @media (max-width: 860px) {
       .hero { padding: 120px 24px 80px; }
@@ -749,6 +751,7 @@
       .section-cta { padding: 100px 24px; }
 
       .mobile-hidden { display: none; }
+      .mobile-only { display: block; }
     }
 
     @media (max-width: 480px) {
@@ -982,6 +985,10 @@
         <details>
           <summary>Is this a philosophy book or a practical guide?</summary>
           <p class="faq-answer">It leans toward philosophy, but with practical ground under it. Every idea connects to something you can actually do, or stop doing. Part IV is entirely practical. The rest earns it.</p>
+        </details>
+        <details class="mobile-only">
+          <summary>Who wrote this?</summary>
+          <p class="faq-answer">Jan Nenning. Sport science graduate from the University of Vienna, years working as a personal trainer, then left the industry to travel South America and Asia. Came back with a different question about why people move. This book is where that landed.</p>
         </details>
       </div>
     </div>
