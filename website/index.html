@@ -654,6 +654,116 @@
       margin: 0 auto 48px;
     }
 
+    .signup-form {
+      display: flex;
+      gap: 0;
+      max-width: 440px;
+      margin: 0 auto 20px;
+    }
+
+    .signup-input {
+      flex: 1;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      padding: 16px 20px;
+      border: 1px solid var(--light-grey);
+      border-right: none;
+      border-radius: 0;
+      background: var(--white);
+      color: var(--near-black);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-input:focus {
+      border-color: var(--terracotta);
+    }
+
+    .signup-input::placeholder {
+      color: var(--mid-grey);
+    }
+
+    .signup-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 16px 28px;
+      background: var(--near-black);
+      color: var(--warm-white);
+      border: 1px solid var(--near-black);
+      cursor: pointer;
+      transition: background 0.25s;
+      white-space: nowrap;
+    }
+
+    .signup-btn:hover {
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+    }
+
+    .signup-btn:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    .signup-label {
+      display: block;
+      margin-bottom: 28px;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--mid-grey);
+    }
+
+    .signup-confirmation {
+      font-size: 15px;
+      font-weight: 300;
+      color: #4A4744;
+      line-height: 1.7;
+      max-width: 440px;
+      margin: 0 auto 20px;
+    }
+
+    .signup-error {
+      color: var(--terracotta);
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    .cta-instagram {
+      display: block;
+      margin-top: 32px;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--mid-grey);
+    }
+
+    .cta-instagram a {
+      color: var(--terracotta);
+      text-decoration: none;
+    }
+
+    .cta-instagram a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-social {
+      display: inline-block;
+      margin-left: 12px;
+      vertical-align: middle;
+    }
+
+    .footer-social a {
+      color: var(--mid-grey);
+      transition: color 0.2s;
+    }
+
+    .footer-social a:hover {
+      color: var(--terracotta);
+    }
+
     .cta-note {
       display: block;
       margin-top: 22px;
@@ -768,6 +878,10 @@
 
       .book { width: 220px; height: 330px; padding: 28px 26px 22px; }
       .book-intuitive, .book-workout { font-size: 42px; }
+
+      .signup-form { flex-direction: column; }
+      .signup-input { border-right: 1px solid var(--light-grey); border-bottom: none; }
+      .signup-btn { width: 100%; }
     }
   </style>
 </head>
@@ -1004,8 +1118,14 @@
       If you know the cycle: motivated, burned out, guilty, repeat. This book won't give you a new program to follow.<br><br>
       It'll give you something that lasts longer: a different way of thinking about why you move, and how to build a relationship with your body that doesn't require constant willpower to hold together.
     </p>
-    <span class="btn-soon">Coming soon</span>
-    <span class="cta-note">The book is not yet available. More to come.</span>
+    <div id="signup-container">
+      <span class="signup-label">Get notified when the book launches.</span>
+      <form class="signup-form" id="signup-form" onsubmit="handleSignup(event)">
+        <input type="email" class="signup-input" id="signup-email" placeholder="Your email" required>
+        <button type="submit" class="signup-btn" id="signup-btn">Notify me</button>
+      </form>
+    </div>
+    <span class="cta-instagram">Follow the journey on <a href="https://instagram.com/intuitiveworkout" target="_blank" rel="noopener">@intuitiveworkout</a></span>
   </section>
 
   <!-- Footer -->
@@ -1013,7 +1133,7 @@
     <a href="#" class="footer-logo">
       <span class="footer-logo-light">Intuitive</span><span class="footer-logo-bold">Workout</span>
     </a>
-    <p>intuitive-workout.com &nbsp;·&nbsp; © 2026 Jan Nenning</p>
+    <p>intuitive-workout.com &nbsp;·&nbsp; © 2026 Jan Nenning <span class="footer-social"><a href="https://instagram.com/intuitiveworkout" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a></span></p>
   </footer>
 
   <script>
@@ -1035,6 +1155,37 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     reveals.forEach(el => observer.observe(el));
+
+    // Email signup
+    const SIGNUP_URL = 'https://script.google.com/macros/s/AKfycbw1Nait23HB13c1_X0govN2IC1kabGqcHZsjnmw_iL_So1Bg8TI2FIYBI-q0zBWw2QlfQ/exec';
+
+    function handleSignup(e) {
+      e.preventDefault();
+      const email = document.getElementById('signup-email').value.trim();
+      const btn = document.getElementById('signup-btn');
+      const container = document.getElementById('signup-container');
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      fetch(SIGNUP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+      })
+      .then(function() {
+        container.innerHTML = '<p class="signup-confirmation">You\'re in. Check your inbox for a welcome email.<br>If it\'s not there, check spam.</p>';
+      })
+      .catch(function() {
+        btn.disabled = false;
+        btn.textContent = 'Notify me';
+        var err = document.createElement('p');
+        err.className = 'signup-error';
+        err.textContent = 'Something went wrong. Try again.';
+        container.appendChild(err);
+      });
+    }
   </script>
 </body>
 </html>
