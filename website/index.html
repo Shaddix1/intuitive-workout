@@ -6,6 +6,9 @@
   <title>Intuitive Workout. You already do this.</title>
   <meta name="description" content="You already do this. You just don't have a name for it. Intuitive Workout by Jan Nenning, a book about learning to listen to your body.">
 
+  <!-- Gumroad -->
+  <script src="https://gumroad.com/js/gumroad.js"></script>
+
   <!-- Canonical -->
   <link rel="canonical" href="https://intuitive-workout.com">
 
@@ -26,12 +29,111 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Book",
-    "name": "Intuitive Workout",
-    "author": { "@type": "Person", "name": "Jan Nenning" },
-    "description": "A book about learning to listen to your body and building a movement practice that survives.",
-    "url": "https://intuitive-workout.com",
-    "inLanguage": "en"
+    "@graph": [
+      {
+        "@type": "Book",
+        "@id": "https://intuitive-workout.com/#book",
+        "name": "Intuitive Workout",
+        "description": "A book about learning to listen to your body and building a movement practice that survives. Not a program. Not a plan. A shift in how you relate to movement.",
+        "url": "https://intuitive-workout.com",
+        "inLanguage": "en",
+        "author": {"@id": "https://intuitive-workout.com/#author"},
+        "publisher": {"@id": "https://intuitive-workout.com/#author"},
+        "genre": ["Health & Fitness", "Self-Help", "Philosophy of Movement"],
+        "about": [
+          "Intuitive movement",
+          "Exercise adherence",
+          "Interoception",
+          "Body awareness",
+          "Fitness philosophy",
+          "Motivation science"
+        ],
+        "bookFormat": "https://schema.org/EBook"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://intuitive-workout.com/#author",
+        "name": "Jan Nenning",
+        "description": "Sport science graduate from the University of Vienna, former personal trainer, author of Intuitive Workout.",
+        "url": "https://intuitive-workout.com",
+        "sameAs": [
+          "https://www.instagram.com/intuitiveworkout"
+        ],
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "University of Vienna"
+        },
+        "knowsAbout": [
+          "Sport science",
+          "Intuitive movement",
+          "Exercise adherence",
+          "Interoception",
+          "Personal training",
+          "Motivation psychology"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://intuitive-workout.com/#website",
+        "name": "Intuitive Workout",
+        "url": "https://intuitive-workout.com",
+        "publisher": {"@id": "https://intuitive-workout.com/#author"},
+        "inLanguage": "en"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is Intuitive Workout an anti-fitness book?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The author still lifts weights, runs, and pushes hard when the moment calls for it. The book is pro-movement and anti-dogma. Chapter Seven is specifically written for people who've been lifting for years and have no interest in stopping."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need fitness experience to read Intuitive Workout?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "None. Whether you've never been to a gym or you've trained for twenty years, the philosophy is relevant. The questions it asks don't require a fitness background to answer."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Intuitive Workout include a workout plan?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Deliberately, no. That would defeat the point. There are examples of how the author approaches his own training, not as blueprints but as illustrations. The goal is to help readers find their own approach."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Intuitive Workout science-based?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Both science and lived experience. The motivation research is real. The adherence data is real. The interoception framework comes from neuroscience. But lived experience matters too. Science confirms what the experience already showed."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Intuitive Workout a philosophy book or a practical guide?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It leans toward philosophy, but with practical ground under it. Every idea connects to something you can actually do, or stop doing. Part IV is entirely practical. The rest earns it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who wrote Intuitive Workout?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Jan Nenning. Sport science graduate from the University of Vienna, years working as a personal trainer, then left the industry to travel South America and Asia. Came back with a different question about why people move. This book is where that landed."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
 
@@ -245,18 +347,193 @@
       transform: translateY(-1px);
     }
 
-    .btn-soon {
+    .hero-scroll-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--terracotta);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: opacity 0.25s ease;
+    }
+
+    .hero-scroll-link:hover { opacity: 0.7; }
+
+    .buy-group {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-buy {
       display: inline-block;
       font-family: 'Inter', sans-serif;
       font-size: 11px;
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--mid-grey);
-      border: 1px solid var(--light-grey);
       padding: 17px 40px;
-      cursor: default;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      text-align: center;
     }
+
+    .btn-buy--primary {
+      background: var(--near-black);
+      color: var(--white);
+      border: 1px solid var(--near-black);
+    }
+
+    .btn-buy--primary:hover {
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+      transform: translateY(-1px);
+    }
+
+    .btn-buy--secondary {
+      background: transparent;
+      color: var(--near-black);
+      border: 1px solid var(--light-grey);
+    }
+
+    .btn-buy--secondary:hover {
+      border-color: var(--terracotta);
+      color: var(--terracotta);
+      transform: translateY(-1px);
+    }
+
+    /* ── Solana Pay Modal ── */
+    .sol-modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(26, 26, 26, 0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sol-modal-backdrop.active { display: flex; }
+
+    .sol-modal {
+      background: var(--warm-white);
+      padding: 48px 40px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+    }
+
+    .sol-modal-close {
+      position: absolute;
+      top: 16px; right: 20px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--mid-grey);
+      line-height: 1;
+    }
+
+    .sol-modal-close:hover { color: var(--near-black); }
+
+    .sol-modal h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .sol-modal-price {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--mid-grey);
+      margin-bottom: 24px;
+    }
+
+    .sol-token-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 24px;
+      border: 1px solid var(--light-grey);
+    }
+
+    .sol-token-tab {
+      flex: 1;
+      padding: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--mid-grey);
+      transition: all 0.2s ease;
+    }
+
+    .sol-token-tab.active {
+      background: var(--near-black);
+      color: var(--white);
+    }
+
+    .sol-qr-container {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 20px;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sol-qr-container canvas { max-width: 100%; max-height: 100%; }
+
+    .sol-wallet-address {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      color: var(--mid-grey);
+      word-break: break-all;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .sol-verify-btn {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 14px 36px;
+      background: var(--near-black);
+      color: var(--white);
+      border: 1px solid var(--near-black);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      width: 100%;
+    }
+
+    .sol-verify-btn:hover {
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+    }
+
+    .sol-verify-btn:disabled { opacity: 0.5; cursor: default; }
+
+    .sol-status {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      margin-top: 16px;
+      color: var(--mid-grey);
+    }
+
+    .sol-status.success { color: #2d8a4e; }
+    .sol-status.error { color: #c44; }
 
     .hero-byline {
       font-size: 12px;
@@ -492,6 +769,16 @@
 
     .about-card-spacer { flex: 1; }
 
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 2px;
+      margin-bottom: 28px;
+      filter: grayscale(0.15);
+    }
+
     .about-name {
       font-family: 'Playfair Display', serif;
       font-size: 14px;
@@ -569,6 +856,53 @@
       font-weight: 300;
       color: rgba(255,255,255,0.46);
       line-height: 1.75;
+    }
+
+    /* ── From the Book (collapsible) ── */
+    .from-book-toggle {
+      background: none;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--mid-grey);
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.2s;
+    }
+
+    .from-book-toggle:hover {
+      color: var(--near-black);
+    }
+
+    .from-book-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .from-book-panel.active {
+      max-height: 200px;
+    }
+
+    .from-book-links {
+      padding-top: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .from-book-link {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--mid-grey);
+      text-decoration: none;
+      padding: 6px 0;
+      transition: color 0.2s;
+    }
+
+    .from-book-link:hover {
+      color: var(--terracotta);
     }
 
     /* ── FAQ section ── */
@@ -732,6 +1066,54 @@
       margin-top: 8px;
     }
 
+    .contact-toggle {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--mid-grey);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: 'Inter', sans-serif;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .contact-toggle:hover { color: var(--near-black); }
+
+    .contact-form {
+      display: none;
+      margin-top: 20px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-form.active { display: block; }
+
+    .contact-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 14px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      border: 1px solid var(--light-grey);
+      background: var(--white);
+      color: var(--near-black);
+      resize: vertical;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+    }
+
+    .contact-textarea:focus {
+      border-color: var(--terracotta);
+      outline: none;
+    }
+
+    .contact-textarea::placeholder { color: var(--mid-grey); }
+
     .cta-instagram {
       display: block;
       margin-top: 32px;
@@ -879,9 +1261,12 @@
       .book { width: 220px; height: 330px; padding: 28px 26px 22px; }
       .book-intuitive, .book-workout { font-size: 42px; }
 
+      .buy-group { flex-direction: column; }
+      .btn-buy { width: 100%; }
       .signup-form { flex-direction: column; }
       .signup-input { border-right: 1px solid var(--light-grey); border-bottom: none; }
       .signup-btn { width: 100%; }
+      .sol-modal { padding: 36px 24px; }
     }
   </style>
 </head>
@@ -892,7 +1277,7 @@
     <a href="#" class="nav-logo">
       <span class="nav-logo-light">Intuitive</span><span class="nav-logo-bold">Workout</span>
     </a>
-    <a href="#get" class="nav-cta">Get notified</a>
+    <a href="#get" class="nav-cta">Get the Book</a>
   </nav>
 
   <!-- Hero -->
@@ -914,7 +1299,7 @@
         </p>
 
         <div class="hero-cta-group">
-          <a href="#get" class="btn-soon" style="cursor:pointer; text-decoration:none;">Get notified when it launches</a>
+          <a href="#get" class="hero-scroll-link">Get the book ↓</a>
           <span class="hero-byline">By Jan Nenning, sport science graduate, former personal trainer, and someone who walked away from a career he was good at to figure this out.</span>
         </div>
       </div>
@@ -1028,6 +1413,7 @@
 
         <div class="about-card">
           <div class="about-card-spacer"></div>
+          <img src="jan.webp" alt="Jan Nenning at Angkor Wat, Cambodia" class="about-photo" loading="lazy">
           <div class="about-name">Jan Nenning</div>
           <div class="about-title">Sport science graduate<br>Personal trainer · Author</div>
           <div class="about-rule"></div>
@@ -1105,6 +1491,16 @@
           <p class="faq-answer">Jan Nenning. Sport science graduate from the University of Vienna, years working as a personal trainer, then left the industry to travel South America and Asia. Came back with a different question about why people move. This book is where that landed.</p>
         </details>
       </div>
+
+      <div style="margin-top: 48px;" id="links">
+        <button class="from-book-toggle" onclick="document.getElementById('from-book-panel').classList.toggle('active')">People mentioned in the book &darr;</button>
+        <div class="from-book-panel" id="from-book-panel">
+          <div class="from-book-links">
+            <a href="https://arktype.ink/atlasgrace" target="_blank" rel="noopener" class="from-book-link">Atlas Grace</a>
+            <a href="https://www.instagram.com/dens_gate/" target="_blank" rel="noopener" class="from-book-link">Den the Adventure-Man</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1118,15 +1514,45 @@
       If you know the cycle: motivated, burned out, guilty, repeat. This book won't give you a new program to follow.<br><br>
       It'll give you something that lasts longer: a different way of thinking about why you move, and how to build a relationship with your body that doesn't require constant willpower to hold together.
     </p>
+    <div class="buy-group">
+      <a class="btn-buy btn-buy--primary gumroad-button" href="https://jannenning.gumroad.com/l/intuitive-workout">Get the Book · $9.90</a>
+      <button class="btn-buy btn-buy--secondary" id="sol-pay-btn" onclick="openSolModal()">Pay with SOL / USDC</button>
+    </div>
     <div id="signup-container">
-      <span class="signup-label">Get notified when the book launches.</span>
+      <span class="signup-label">Stay in the loop.</span>
       <form class="signup-form" id="signup-form" onsubmit="handleSignup(event)">
         <input type="email" class="signup-input" id="signup-email" placeholder="Your email" required>
-        <button type="submit" class="signup-btn" id="signup-btn">Notify me</button>
+        <button type="submit" class="signup-btn" id="signup-btn">Subscribe</button>
+      </form>
+    </div>
+    <button class="contact-toggle" onclick="document.getElementById('contact-form').classList.toggle('active')">Want to get in touch?</button>
+    <div class="contact-form" id="contact-form">
+      <form onsubmit="handleContact(event)">
+        <input type="email" class="signup-input" id="contact-email" placeholder="Your email" required style="margin-bottom: 12px; width: 100%; box-sizing: border-box;">
+        <textarea class="contact-textarea" id="contact-message" placeholder="Your message" required></textarea>
+        <button type="submit" class="signup-btn" id="contact-btn" style="width: 100%;">Send</button>
       </form>
     </div>
     <span class="cta-instagram">Follow the journey on <a href="https://instagram.com/intuitiveworkout" target="_blank" rel="noopener">@intuitiveworkout</a></span>
   </section>
+
+  <!-- Solana Pay Modal -->
+  <div class="sol-modal-backdrop" id="sol-modal">
+    <div class="sol-modal">
+      <button class="sol-modal-close" onclick="closeSolModal()">&times;</button>
+      <h3>Pay with Crypto</h3>
+      <p class="sol-modal-price">$9.90 USD · <span id="sol-price-display">loading...</span></p>
+      <p style="font-size: 11px; color: var(--terracotta); margin-bottom: 16px; font-weight: 500;">Solana network only. Do not send from other networks.</p>
+      <div class="sol-token-tabs">
+        <button class="sol-token-tab active" onclick="switchToken('SOL')">SOL</button>
+        <button class="sol-token-tab" onclick="switchToken('USDC')">USDC</button>
+      </div>
+      <div class="sol-qr-container" id="sol-qr"></div>
+      <p class="sol-wallet-address">FFoCtKu374GmmEkCY5p48NF2ytgUvGc6fJGr7UbgCT96</p>
+      <button class="sol-verify-btn" id="sol-verify-btn" onclick="verifySolPayment()">I've sent the payment</button>
+      <p class="sol-status" id="sol-status"></p>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer>
@@ -1179,13 +1605,157 @@
       })
       .catch(function() {
         btn.disabled = false;
-        btn.textContent = 'Notify me';
+        btn.disabled = false;
+        btn.textContent = 'Subscribe';
         var err = document.createElement('p');
         err.className = 'signup-error';
         err.textContent = 'Something went wrong. Try again.';
         container.appendChild(err);
       });
     }
+
+    // ── Contact form ──
+    function handleContact(e) {
+      e.preventDefault();
+      const email = document.getElementById('contact-email').value.trim();
+      const message = document.getElementById('contact-message').value.trim();
+      const btn = document.getElementById('contact-btn');
+      const form = document.getElementById('contact-form');
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      fetch(SIGNUP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'contact', email: email, message: message })
+      })
+      .then(function() {
+        form.innerHTML = '<p class="signup-confirmation">Message sent. I\'ll get back to you.</p>';
+      })
+      .catch(function() {
+        btn.disabled = false;
+        btn.textContent = 'Send';
+      });
+    }
+
+    // ── Solana Pay ──
+    const SOL_WALLET = 'FFoCtKu374GmmEkCY5p48NF2ytgUvGc6fJGr7UbgCT96';
+    const USDC_MINT = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
+    const BOOK_PRICE_USD = 9.90;
+    const WORKER_URL = 'https://solana-pay.jan-nennin.workers.dev';
+    let currentToken = 'SOL';
+    let solPriceUsd = null;
+
+    async function fetchSolPrice() {
+      try {
+        const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd');
+        const data = await res.json();
+        solPriceUsd = data.solana.usd;
+        updatePriceDisplay();
+      } catch (e) {
+        document.getElementById('sol-price-display').textContent = 'price unavailable';
+      }
+    }
+
+    function updatePriceDisplay() {
+      const display = document.getElementById('sol-price-display');
+      if (currentToken === 'USDC') {
+        display.textContent = BOOK_PRICE_USD.toFixed(2) + ' USDC';
+      } else if (solPriceUsd) {
+        const solAmount = (BOOK_PRICE_USD / solPriceUsd).toFixed(4);
+        display.textContent = solAmount + ' SOL';
+      }
+    }
+
+    function getSolanaPayUrl() {
+      if (currentToken === 'USDC') {
+        return 'solana:' + SOL_WALLET + '?amount=' + BOOK_PRICE_USD.toFixed(2) + '&spl-token=' + USDC_MINT + '&label=Intuitive+Workout&message=Ebook+Purchase';
+      } else {
+        const solAmount = solPriceUsd ? (BOOK_PRICE_USD / solPriceUsd).toFixed(4) : '0';
+        return 'solana:' + SOL_WALLET + '?amount=' + solAmount + '&label=Intuitive+Workout&message=Ebook+Purchase';
+      }
+    }
+
+    function generateQR(text) {
+      const container = document.getElementById('sol-qr');
+      container.innerHTML = '';
+      if (typeof QRCode !== 'undefined') {
+        new QRCode(container, {
+          text: text,
+          width: 180,
+          height: 180,
+          colorDark: '#1A1A1A',
+          colorLight: '#FFFFFF',
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      }
+    }
+
+    function switchToken(token) {
+      currentToken = token;
+      document.querySelectorAll('.sol-token-tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      updatePriceDisplay();
+      generateQR(getSolanaPayUrl());
+    }
+
+    function openSolModal() {
+      document.getElementById('sol-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      fetchSolPrice().then(() => generateQR(getSolanaPayUrl()));
+    }
+
+    function closeSolModal() {
+      document.getElementById('sol-modal').classList.remove('active');
+      document.body.style.overflow = '';
+      document.getElementById('sol-status').textContent = '';
+      document.getElementById('sol-status').className = 'sol-status';
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('sol-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeSolModal();
+    });
+
+    async function verifySolPayment() {
+      const btn = document.getElementById('sol-verify-btn');
+      const status = document.getElementById('sol-status');
+      btn.disabled = true;
+      status.textContent = 'Checking the blockchain...';
+      status.className = 'sol-status';
+
+      try {
+        const res = await fetch(WORKER_URL + '/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            token: currentToken,
+            amount: currentToken === 'USDC' ? BOOK_PRICE_USD : (BOOK_PRICE_USD / solPriceUsd),
+            wallet: SOL_WALLET
+          })
+        });
+        const data = await res.json();
+
+        if (data.status === 'verified') {
+          status.textContent = 'Payment confirmed.';
+          status.className = 'sol-status success';
+          btn.textContent = 'Download';
+          btn.disabled = false;
+          btn.onclick = function() { window.location.href = data.downloadUrl; };
+        } else {
+          status.textContent = 'Payment not found yet. Wait a moment and try again.';
+          status.className = 'sol-status error';
+          btn.disabled = false;
+        }
+      } catch (e) {
+        status.textContent = 'Verification failed. Try again.';
+        status.className = 'sol-status error';
+        btn.disabled = false;
+      }
+    }
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 </body>
 </html>

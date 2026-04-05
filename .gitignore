@@ -1,5 +1,6 @@
 # Private project content — not for public repo
 ebook/
+!website/ebook/
 research/
 assets/
 social/
