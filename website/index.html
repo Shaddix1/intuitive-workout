@@ -1066,6 +1066,14 @@
       margin-top: 8px;
     }
 
+    .signup-subtext {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--mid-grey);
+      margin: 12px auto 0;
+      max-width: 440px;
+    }
+
     .contact-toggle {
       display: inline-block;
       margin-top: 16px;
@@ -1519,11 +1527,12 @@
       <button class="btn-buy btn-buy--secondary" id="sol-pay-btn" onclick="openSolModal()">Pay with SOL / USDC</button>
     </div>
     <div id="signup-container">
-      <span class="signup-label">Stay in the loop.</span>
+      <span class="signup-label">Read the first chapter free.</span>
       <form class="signup-form" id="signup-form" onsubmit="handleSignup(event)">
         <input type="email" class="signup-input" id="signup-email" placeholder="Your email" required>
-        <button type="submit" class="signup-btn" id="signup-btn">Subscribe</button>
+        <button type="submit" class="signup-btn" id="signup-btn">Send it to me</button>
       </form>
+      <p class="signup-subtext">You'll hear from me occasionally when there's something worth sharing.</p>
     </div>
     <button class="contact-toggle" onclick="document.getElementById('contact-form').classList.toggle('active')">Want to get in touch?</button>
     <div class="contact-form" id="contact-form">
@@ -1601,7 +1610,7 @@
         body: JSON.stringify({ email: email })
       })
       .then(function() {
-        container.innerHTML = '<p class="signup-confirmation">You\'re in. Check your inbox for a welcome email.<br>If it\'s not there, check spam.</p>';
+        container.innerHTML = '<p class="signup-confirmation">Check your inbox — the first chapter is on its way.<br>If it\'s not there, check spam.</p>';
       })
       .catch(function() {
         btn.disabled = false;
