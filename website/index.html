@@ -1610,7 +1610,7 @@
         body: JSON.stringify({ email: email })
       })
       .then(function() {
-        container.innerHTML = '<p class="signup-confirmation">Check your inbox — the first chapter is on its way.<br>If it\'s not there, check spam.</p>';
+        container.innerHTML = '<p class="signup-confirmation">Check your inbox. The first chapter is on its way.<br>If it\'s not there, check spam.</p>';
       })
       .catch(function() {
         btn.disabled = false;
