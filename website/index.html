@@ -1660,6 +1660,36 @@
     const WORKER_URL = 'https://solana-pay.jan-nennin.workers.dev';
     let currentToken = 'SOL';
     let solPriceUsd = null;
+    let sessionReference = null; // unique per modal open — ties this buyer's payment to this verify call
+
+    // Base58 encode a Uint8Array (Bitcoin alphabet, used by Solana for public keys)
+    function base58Encode(bytes) {
+      const ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+      const digits = [0];
+      for (let i = 0; i < bytes.length; i++) {
+        let carry = bytes[i];
+        for (let j = 0; j < digits.length; j++) {
+          carry += digits[j] << 8;
+          digits[j] = carry % 58;
+          carry = (carry / 58) | 0;
+        }
+        while (carry > 0) {
+          digits.push(carry % 58);
+          carry = (carry / 58) | 0;
+        }
+      }
+      // leading zeros
+      let result = '';
+      for (let i = 0; i < bytes.length && bytes[i] === 0; i++) result += '1';
+      for (let i = digits.length - 1; i >= 0; i--) result += ALPHABET[digits[i]];
+      return result;
+    }
+
+    // Generate a random 32-byte reference key, base58-encoded (matches Solana pubkey format)
+    function generateReference() {
+      const bytes = crypto.getRandomValues(new Uint8Array(32));
+      return base58Encode(bytes);
+    }
 
     async function fetchSolPrice() {
       try {
@@ -1683,11 +1713,12 @@
     }
 
     function getSolanaPayUrl() {
+      const ref = '&reference=' + sessionReference;
       if (currentToken === 'USDC') {
-        return 'solana:' + SOL_WALLET + '?amount=' + BOOK_PRICE_USD.toFixed(2) + '&spl-token=' + USDC_MINT + '&label=Intuitive+Workout&message=Ebook+Purchase';
+        return 'solana:' + SOL_WALLET + '?amount=' + BOOK_PRICE_USD.toFixed(2) + '&spl-token=' + USDC_MINT + '&label=Intuitive+Workout&message=Ebook+Purchase' + ref;
       } else {
         const solAmount = solPriceUsd ? (BOOK_PRICE_USD / solPriceUsd).toFixed(4) : '0';
-        return 'solana:' + SOL_WALLET + '?amount=' + solAmount + '&label=Intuitive+Workout&message=Ebook+Purchase';
+        return 'solana:' + SOL_WALLET + '?amount=' + solAmount + '&label=Intuitive+Workout&message=Ebook+Purchase' + ref;
       }
     }
 
@@ -1715,6 +1746,7 @@
     }
 
     function openSolModal() {
+      sessionReference = generateReference(); // fresh per-buyer reference key
       document.getElementById('sol-modal').classList.add('active');
       document.body.style.overflow = 'hidden';
       fetchSolPrice().then(() => generateQR(getSolanaPayUrl()));
@@ -1725,6 +1757,7 @@
       document.body.style.overflow = '';
       document.getElementById('sol-status').textContent = '';
       document.getElementById('sol-status').className = 'sol-status';
+      sessionReference = null;
     }
 
     // Close modal on backdrop click
@@ -1746,7 +1779,8 @@
           body: JSON.stringify({
             token: currentToken,
             amount: currentToken === 'USDC' ? BOOK_PRICE_USD : (BOOK_PRICE_USD / solPriceUsd),
-            wallet: SOL_WALLET
+            wallet: SOL_WALLET,
+            reference: sessionReference
           })
         });
         const data = await res.json();
