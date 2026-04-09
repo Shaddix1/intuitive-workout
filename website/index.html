@@ -497,14 +497,48 @@
 
     .sol-qr-container canvas { max-width: 100%; max-height: 100%; }
 
-    .sol-wallet-address {
+    .sol-copy-link-btn {
+      display: inline-block;
       font-family: 'Inter', sans-serif;
-      font-size: 10px;
-      color: var(--mid-grey);
-      word-break: break-all;
-      margin-bottom: 24px;
-      line-height: 1.5;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 11px 20px;
+      background: transparent;
+      color: var(--near-black);
+      border: 1px solid var(--light-grey);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      margin-bottom: 12px;
+      width: 100%;
     }
+
+    .sol-copy-link-btn:hover {
+      border-color: var(--near-black);
+    }
+
+    .sol-copy-link-btn.copied {
+      border-color: var(--terracotta);
+      color: var(--terracotta);
+    }
+
+    .sol-help-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      color: var(--mid-grey);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .sol-help-text a {
+      color: var(--mid-grey);
+      text-decoration: underline;
+      text-decoration-color: var(--light-grey);
+      cursor: pointer;
+    }
+
+    .sol-help-text a:hover { color: var(--terracotta); text-decoration-color: var(--terracotta); }
 
     .sol-verify-btn {
       display: inline-block;
@@ -1561,7 +1595,8 @@
         <button class="sol-token-tab" onclick="switchToken('USDC')">USDC</button>
       </div>
       <div class="sol-qr-container" id="sol-qr"></div>
-      <p class="sol-wallet-address">FFoCtKu374GmmEkCY5p48NF2ytgUvGc6fJGr7UbgCT96</p>
+      <button class="sol-copy-link-btn" id="sol-copy-link-btn" onclick="copyPaymentLink(this)">Copy payment link</button>
+      <p class="sol-help-text">Scan the QR with a Solana wallet, or copy the payment link and paste it into your wallet. Trouble? Use <a href="https://jannenning.gumroad.com/l/intuitive-workout">Gumroad</a> instead, or <a onclick="openContactFromSolModal(event)">get in touch</a>.</p>
       <button class="sol-verify-btn" id="sol-verify-btn" onclick="verifySolPayment()">I've sent the payment</button>
       <p class="sol-status" id="sol-status"></p>
     </div>
@@ -1758,6 +1793,43 @@
       document.getElementById('sol-status').textContent = '';
       document.getElementById('sol-status').className = 'sol-status';
       sessionReference = null;
+    }
+
+    function copyPaymentLink(btn) {
+      const url = getSolanaPayUrl();
+      const original = btn.textContent;
+      navigator.clipboard.writeText(url).then(() => {
+        btn.textContent = 'Copied — paste into your wallet';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 2500);
+      }).catch(() => {
+        // Fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = url;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        btn.textContent = 'Copied — paste into your wallet';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 2500);
+      });
+    }
+
+    function openContactFromSolModal(e) {
+      if (e) e.preventDefault();
+      closeSolModal();
+      const contactForm = document.getElementById('contact-form');
+      if (contactForm && !contactForm.classList.contains('active')) {
+        contactForm.classList.add('active');
+      }
+      contactForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     // Close modal on backdrop click
