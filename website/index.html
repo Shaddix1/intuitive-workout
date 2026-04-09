@@ -497,30 +497,51 @@
 
     .sol-qr-container canvas { max-width: 100%; max-height: 100%; }
 
-    .sol-copy-link-btn {
+    .sol-qr-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      color: var(--mid-grey);
+      text-align: center;
+      margin-bottom: 16px;
+      letter-spacing: 0.04em;
+    }
+
+    .sol-divider {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      color: var(--light-grey);
+      text-align: center;
+      margin: 4px 0 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .sol-ext-btn {
       display: inline-block;
       font-family: 'Inter', sans-serif;
       font-size: 11px;
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 11px 20px;
+      padding: 12px 20px;
       background: transparent;
       color: var(--near-black);
-      border: 1px solid var(--light-grey);
+      border: 1px solid var(--near-black);
       cursor: pointer;
       transition: all 0.25s ease;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
       width: 100%;
     }
 
-    .sol-copy-link-btn:hover {
-      border-color: var(--near-black);
-    }
+    .sol-ext-btn:hover { background: var(--near-black); color: var(--white); }
+    .sol-ext-btn:disabled { opacity: 0.5; cursor: default; }
 
-    .sol-copy-link-btn.copied {
-      border-color: var(--terracotta);
-      color: var(--terracotta);
+    .sol-ext-note {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      color: var(--mid-grey);
+      text-align: center;
+      margin-bottom: 16px;
     }
 
     .sol-help-text {
@@ -1595,8 +1616,13 @@
         <button class="sol-token-tab" onclick="switchToken('USDC')">USDC</button>
       </div>
       <div class="sol-qr-container" id="sol-qr"></div>
-      <button class="sol-copy-link-btn" id="sol-copy-link-btn" onclick="copyPaymentLink(this)">Copy payment link</button>
-      <p class="sol-help-text">Scan the QR with a Solana wallet, or copy the payment link and paste it into your wallet. Trouble? Use <a href="https://jannenning.gumroad.com/l/intuitive-workout">Gumroad</a> instead, or <a onclick="openContactFromSolModal(event)">get in touch</a>.</p>
+      <p class="sol-qr-label">Scan with your phone wallet</p>
+      <div id="sol-ext-section" style="display:none">
+        <p class="sol-divider">or on desktop</p>
+        <button class="sol-ext-btn" id="sol-ext-btn" onclick="payWithExtension(this)">Pay with wallet</button>
+        <p class="sol-ext-note" id="sol-ext-note">SOL only via extension. For USDC, use the QR code.</p>
+      </div>
+      <p class="sol-help-text">Trouble? Use <a href="https://jannenning.gumroad.com/l/intuitive-workout" target="_blank">Gumroad</a> instead, or <a onclick="openContactFromSolModal(event)">get in touch</a>.</p>
       <button class="sol-verify-btn" id="sol-verify-btn" onclick="verifySolPayment()">I've sent the payment</button>
       <p class="sol-status" id="sol-status"></p>
     </div>
@@ -1777,13 +1803,33 @@
       document.querySelectorAll('.sol-token-tab').forEach(t => t.classList.remove('active'));
       event.target.classList.add('active');
       updatePriceDisplay();
+      updateExtSection(token);
       generateQR(getSolanaPayUrl());
+    }
+
+    function updateExtSection(token) {
+      const section = document.getElementById('sol-ext-section');
+      const btn = document.getElementById('sol-ext-btn');
+      const note = document.getElementById('sol-ext-note');
+      const detected = detectWallet();
+      if (detected && token === 'SOL') {
+        btn.textContent = 'Pay with ' + detected.name;
+        btn.onclick = function() { payWithExtension(btn); };
+        note.style.display = 'block';
+        section.style.display = 'block';
+      } else if (detected && token === 'USDC') {
+        // Extension doesn't support USDC — hide section
+        section.style.display = 'none';
+      } else {
+        section.style.display = 'none';
+      }
     }
 
     function openSolModal() {
       sessionReference = generateReference(); // fresh per-buyer reference key
       document.getElementById('sol-modal').classList.add('active');
       document.body.style.overflow = 'hidden';
+      updateExtSection(currentToken);
       fetchSolPrice().then(() => generateQR(getSolanaPayUrl()));
     }
 
@@ -1795,31 +1841,115 @@
       sessionReference = null;
     }
 
-    function copyPaymentLink(btn) {
-      const url = getSolanaPayUrl();
-      const original = btn.textContent;
-      navigator.clipboard.writeText(url).then(() => {
-        btn.textContent = 'Copied — paste into your wallet';
-        btn.classList.add('copied');
-        setTimeout(() => {
-          btn.textContent = original;
-          btn.classList.remove('copied');
-        }, 2500);
-      }).catch(() => {
-        // Fallback for older browsers
-        const ta = document.createElement('textarea');
-        ta.value = url;
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand('copy'); } catch (e) {}
-        document.body.removeChild(ta);
-        btn.textContent = 'Copied — paste into your wallet';
-        btn.classList.add('copied');
-        setTimeout(() => {
-          btn.textContent = original;
-          btn.classList.remove('copied');
-        }, 2500);
+    // ── Desktop wallet extension support ──
+
+    function detectWallet() {
+      if (window.phantom?.solana?.isPhantom) return { name: 'Phantom', wallet: window.phantom.solana };
+      if (window.solflare?.isSolflare) return { name: 'Solflare', wallet: window.solflare };
+      if (window.backpack?.isBackpack) return { name: 'Backpack', wallet: window.backpack };
+      if (window.solana) return { name: 'Wallet', wallet: window.solana };
+      return null;
+    }
+
+    function loadSolanaWeb3() {
+      return new Promise((resolve, reject) => {
+        if (window.solanaWeb3) { resolve(); return; }
+        const s = document.createElement('script');
+        s.src = 'https://unpkg.com/@solana/web3.js@1/lib/index.iife.min.js';
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
       });
+    }
+
+    async function payWithExtension(btn) {
+      const detected = detectWallet();
+      if (!detected) return;
+
+      const { wallet, name } = detected;
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      const status = document.getElementById('sol-status');
+
+      try {
+        btn.textContent = 'Loading...';
+        await loadSolanaWeb3();
+        const { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL } = window.solanaWeb3;
+
+        btn.textContent = 'Connecting...';
+        await wallet.connect();
+        const payer = wallet.publicKey;
+
+        if (!solPriceUsd) await fetchSolPrice();
+        const solAmount = BOOK_PRICE_USD / solPriceUsd;
+        const lamports = Math.round(solAmount * LAMPORTS_PER_SOL);
+
+        btn.textContent = 'Preparing...';
+        const connection = new Connection('https://api.mainnet-beta.solana.com', 'confirmed');
+        const { blockhash } = await connection.getLatestBlockhash('confirmed');
+
+        // Build transfer with reference key attached as read-only non-signer account
+        const ix = SystemProgram.transfer({
+          fromPubkey: payer,
+          toPubkey: new PublicKey(SOL_WALLET),
+          lamports,
+        });
+        ix.keys.push({ pubkey: new PublicKey(sessionReference), isSigner: false, isWritable: false });
+
+        const tx = new Transaction({ recentBlockhash: blockhash, feePayer: payer }).add(ix);
+
+        btn.textContent = 'Confirm in wallet...';
+        status.textContent = 'Approve the transaction in your wallet.';
+        status.className = 'sol-status';
+
+        await wallet.signAndSendTransaction(tx);
+
+        // Auto-poll verification
+        status.textContent = 'Transaction sent — confirming on-chain...';
+        btn.textContent = 'Verifying...';
+
+        let attempts = 0;
+        const poll = async () => {
+          attempts++;
+          if (attempts > 24) {
+            btn.textContent = 'I\'ve sent the payment';
+            btn.disabled = false;
+            btn.onclick = function() { verifySolPayment(); };
+            status.textContent = 'Taking longer than expected. Click to verify manually.';
+            status.className = 'sol-status error';
+            return;
+          }
+          try {
+            const res = await fetch(WORKER_URL + '/verify', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ token: 'SOL', amount: solAmount, wallet: SOL_WALLET, reference: sessionReference })
+            });
+            const data = await res.json();
+            if (data.status === 'verified') {
+              status.textContent = 'Payment confirmed.';
+              status.className = 'sol-status success';
+              btn.textContent = 'Download';
+              btn.disabled = false;
+              btn.onclick = function() { window.location.href = data.downloadUrl; };
+            } else {
+              setTimeout(poll, 3000);
+            }
+          } catch (e) { setTimeout(poll, 3000); }
+        };
+
+        setTimeout(poll, 4000);
+
+      } catch (e) {
+        if (e.code !== 4001) { // 4001 = user rejected
+          status.textContent = 'Transaction failed. Try again or use Gumroad.';
+          status.className = 'sol-status error';
+        } else {
+          status.textContent = '';
+        }
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
     }
 
     function openContactFromSolModal(e) {
