@@ -1379,7 +1379,7 @@
     <a href="#" class="nav-logo">
       <span class="nav-logo-light">Intuitive</span><span class="nav-logo-bold">Workout</span>
     </a>
-    <a href="#signup-container" class="nav-cta">Coming Soon</a>
+    <a href="#get" class="nav-cta">Get the Book</a>
   </nav>
 
   <!-- Hero -->
@@ -1401,7 +1401,7 @@
         </p>
 
         <div class="hero-cta-group">
-          <span class="hero-scroll-link" style="cursor:default; opacity:0.5;">Coming soon</span>
+          <a href="#get" class="hero-scroll-link">Get the book ↓</a>
           <span class="hero-byline">By Jan Nenning, sport science graduate, former personal trainer, and someone who walked away from a career he was good at to figure this out.</span>
         </div>
       </div>
@@ -1617,7 +1617,8 @@
       It'll give you something that lasts longer: a different way of thinking about why you move, and how to build a relationship with your body that doesn't require constant willpower to hold together.
     </p>
     <div class="buy-group">
-      <span class="btn-buy btn-buy--primary" style="cursor:default; opacity:0.6;">Coming Soon</span>
+      <a class="btn-buy btn-buy--primary gumroad-button" href="https://jannenning.gumroad.com/l/intuitive-workout">Get the Book · $9.90</a>
+      <button class="btn-buy btn-buy--secondary" id="sol-pay-btn" onclick="openSolModal()">Pay with SOL / USDC</button>
     </div>
     <div id="signup-container">
       <span class="signup-label">Read the first chapter free.</span>
